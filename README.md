@@ -1,4 +1,4 @@
-# Quick-and-dirty spring Boot+AMQP example
+# Quick-and-dirty Spring Boot+AMQP example
 Clone.
 Create `/apptier/src/main/resources/application.properties` and `/webtier/src/main/resources/application.properties` with your RabbitMQ instance configuration. Something like:
 
