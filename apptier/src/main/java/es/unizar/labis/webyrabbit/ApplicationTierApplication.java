@@ -22,5 +22,10 @@ class ApplicationTierApplication {
 	public Queue duplicarQueue() {
 		return new Queue("duplicar");
 	}
+
+	@Bean
+	public Queue responseQueue() {
+		return new Queue("response");
+	}
 }
 

@@ -26,7 +26,7 @@ public class DivideController {
 	// http://localhost:8080/divide?value=420
 	// con la respuesta "Tu resultado es 210!"
 	@GetMapping("/divide")
-	public String hello(@RequestParam(value = "value") int value) {
+	public String divide(@RequestParam(value = "value") int value) {
 		String correlationId = UUID.randomUUID().toString();
 		// Enviamos el mensaje con payload value, a la cola dividir (centralita
 		// por defecto, clave de enrutado dividir), indicando que la respuesta
