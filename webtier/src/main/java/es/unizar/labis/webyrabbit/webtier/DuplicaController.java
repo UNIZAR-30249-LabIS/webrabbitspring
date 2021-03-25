@@ -1,9 +1,15 @@
 package es.unizar.labis.webyrabbit.webtier;
 
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.amqp.support.AmqpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.Time;
+import java.util.concurrent.TimeoutException;
 
 @RestController
 public class DuplicaController {
@@ -27,7 +33,7 @@ public class DuplicaController {
 	// http://localhost:8080/duplica?value=421
 	// con la respuesta "Tu resultado es 842!"
 	@GetMapping("/duplica")
-	public String hello(@RequestParam(value = "value") int value) {
+	public String hello(@RequestParam(value = "value") int value) throws TimeoutException {
 		// Al usar el convertSendAndReceive dejamos que RabbitTemplate implemente el
 		// Request-Reply por nosotros. Envia un mensaje con value (compone automáticamente
 		// un objeto Message con ese int), lo envía a la centralita "" con clave
@@ -44,10 +50,22 @@ public class DuplicaController {
 		Integer response = (Integer)this.rabbitTemplate.convertSendAndReceive(
 				"duplicar", value);
 
+		if (response == null) {
+			throw new TimeoutException();
+		}
+
 		// Lo que conseguimos es que efectivamente este método que responde a una
 		// petición GET enviando un mensaje y esperando su respuesta parezca un
 		// método síncrono, normal(con la diferencia de que hay un timeout y saltará una
 		// excepción si la respuesta no llega en X segundos).
 		return String.format("Tu resultado es %d!", response);
+	}
+
+	// Si salta una excepción de Timeout en cualquier petición de este Controller devolvemos
+	// un código de error y un mensaje explicándolo
+	@ResponseStatus(value=HttpStatus.REQUEST_TIMEOUT)
+	@ExceptionHandler(TimeoutException.class)
+	public String timeout() {
+		return "La petición no puede resolverse ahora";
 	}
 }
