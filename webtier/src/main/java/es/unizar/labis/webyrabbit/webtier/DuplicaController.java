@@ -33,7 +33,7 @@ public class DuplicaController {
 	// http://localhost:8080/duplica?value=421
 	// con la respuesta "Tu resultado es 842!"
 	@GetMapping("/duplica")
-	public String hello(@RequestParam(value = "value") int value) throws TimeoutException {
+	public String duplica(@RequestParam(value = "value") int value) throws TimeoutException {
 		// Al usar el convertSendAndReceive dejamos que RabbitTemplate implemente el
 		// Request-Reply por nosotros. Envia un mensaje con value (compone automáticamente
 		// un objeto Message con ese int), lo envía a la centralita "" con clave
