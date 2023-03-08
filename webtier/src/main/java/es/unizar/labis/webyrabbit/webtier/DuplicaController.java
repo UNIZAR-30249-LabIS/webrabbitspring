@@ -1,6 +1,5 @@
 package es.unizar.labis.webyrabbit.webtier;
 
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.AmqpHeaders;
 import org.springframework.http.HttpStatus;
