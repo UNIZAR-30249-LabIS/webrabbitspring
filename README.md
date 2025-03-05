@@ -10,6 +10,6 @@ spring.rabbitmq.username=YOURUSERNAME   # in CloudAMQP is normally the same as t
 spring.rabbitmq.password=YOURPASSWORD
 ```
 
-Run `./gradlew bootRun` inside the apptier directory, and then in the webtier directory (the order does not matter). JDK/JRE 11 has to be the default Java in your system for Gradle to use it.
+Run `./gradlew bootRun` inside the apptier directory, and then in the webtier directory (the order does not matter). JDK 21 has to be properly installed and the default Java in your system for Gradle to use it.
 
 Now you can try to make requests like <http://localhost:8080/duplica?value=500> and <http://localhost:8080/divide?value=1000>.
